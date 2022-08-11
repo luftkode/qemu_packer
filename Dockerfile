@@ -24,7 +24,8 @@ RUN apt -y install rsync
 
 # Add GitHub SSH key to authorized_keys
 RUN mkdir -p -m 0600 ~/.ssh
-COPY known_hosts ~/.ssh/known_hosts
+# '~'' does not work for COPY command
+COPY known_hosts /root/.ssh/known_hosts
 
 # Create directory for tem_os:
 RUN mkdir /work
