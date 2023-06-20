@@ -40,9 +40,6 @@ jobs:
         context: .
         load: true
         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test
-        ssh: default # Allow SSH Agent forwarding
-      env:
-        SSH_AUTH_SOCK: ${{ env.AGENT_SOCK }} #Exported by step 'Enable SSH Agent'
 
     # Push image to registry:
     - name: Extract metadata (tags, labels) for Docker
@@ -57,10 +54,7 @@ jobs:
         context: .
         push: true
         platforms: linux/amd64,linux/arm64/v8
-        ssh: default # Allow SSH Agent forwarding
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-      env:
-        SSH_AUTH_SOCK: ${{ env.AGENT_SOCK }} #Exported by step 'Enable SSH Agent'
 
 
