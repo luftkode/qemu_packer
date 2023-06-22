@@ -19,11 +19,6 @@ RUN useradd -m -s $(which bash) skytemdev && mkdir -p /work && chown skytemdev:s
 ARG HOME=/home/skytemdev 
 ENV PATH="${PATH}:$HOME/.local/bin"
 
-ENV TERM xterm-256color
-
-# Set cache dir for packer locally to reuse downloads across runs
-ENV PACKER_CACHE_DIR=/work/.packer_cache
-
 # Updating User and Group IDs for skytemdev. UID_V and GID_V are set in build_container.sh'
 ARG uid
 ARG gid
@@ -39,8 +34,19 @@ WORKDIR $HOME
 
 # Add GitHub SSH key to authorized keys
 RUN mkdir -p ${HOME}/.ssh 
-COPY known_hosts ${HOME}/.ssh/.ssh/known_hosts
+# COPY known_hosts ${HOME}/.ssh/known_hosts
+# USER root
+# RUN chown skytemdev:skytemdev ~/.ssh/known_hosts
+# USER skytemdev
 
-WORKDIR /work
+# Create directory for tem_os:
+RUN mkdir -p ${HOME}/work
+
+# Set cache dir for packer locally to reuse downloads across runs
+ENV PACKER_CACHE_DIR=/work/.packer_cache
+
+ENV TERM xterm-256color
+
+WORKDIR ${HOME}/work
 
 CMD ["bash", "-l"]

@@ -5,4 +5,4 @@
 export DOCKER_BUILDKIT=1
 export UID_V=$(id -u)
 export GID_V=$(id -g)
-docker build --build-arg uid=$UID_V --build-arg gid=$GID_V -t airit/qemu_packer .
+docker build --build-arg uid=$UID_V --build-arg gid=$GID_V --ssh default -t qemu_packer .
