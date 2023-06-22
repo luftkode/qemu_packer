@@ -4,7 +4,7 @@ FROM python:3
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
       qemu-kvm virt-manager virt-viewer cifs-utils curl gnupg \
-      software-properties-common rsync uuid-dev
+      software-properties-common rsync
 
 # Install Packer and set up HashiCorp repository.
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
@@ -29,7 +29,7 @@ RUN pip3 install ansible typer pathspec
 
 # Add GitHub SSH key to authorized keys
 RUN mkdir -p /home/dev/.ssh 
-COPY --chown=skytemdev known_hosts /home/dev/.ssh/known_hosts
+COPY --chown=dev known_hosts /home/dev/.ssh/known_hosts
 
 # Set cache dir for packer locally to reuse downloads across runs
 ENV PACKER_CACHE_DIR=/work/.packer_cache
