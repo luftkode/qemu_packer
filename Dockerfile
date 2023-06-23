@@ -16,11 +16,11 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Create dev user
-RUN useradd -ms $(which bash) dev && mkdir -p /artifacts && chown dev:dev /artifacts 
+RUN useradd -ms $(which bash) dev && mkdir -p /work /artifacts && chown -R dev:dev /work 
 ENV PATH="${PATH}:/home/dev/.local/bin"
 
 # Create work directory
-RUN mkdir -p /work && chown -R dev:dev /work
+#RUN mkdir -p /work && chown -R dev:dev /work
 
 USER dev
 
@@ -28,7 +28,7 @@ USER dev
 RUN pip3 install ansible typer pathspec
 
 # Add GitHub SSH key to authorized keys
-RUN mkdir -p /home/dev/.ssh 
+RUN mkdir -p /home/dev/.ssh && touch /home/dev/.ssh/config && echo "StrictHostKeyChecking no" >> $/home/dev/.ssh/config
 COPY --chown=dev known_hosts /home/dev/.ssh/known_hosts
 
 # Set cache dir for packer locally to reuse downloads across runs
