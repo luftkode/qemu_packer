@@ -28,7 +28,7 @@ USER dev
 RUN pip3 install ansible typer pathspec
 
 # Add GitHub SSH key to authorized keys
-RUN mkdir -p /home/dev/.ssh && touch /home/dev/.ssh/config && echo "StrictHostKeyChecking no" >> $/home/dev/.ssh/config
+RUN mkdir -p /home/dev/.ssh && touch /home/dev/.ssh/config && echo "StrictHostKeyChecking no" >> /home/dev/.ssh/config
 COPY --chown=dev known_hosts /home/dev/.ssh/known_hosts
 
 # Set cache dir for packer locally to reuse downloads across runs
