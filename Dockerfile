@@ -3,7 +3,7 @@ FROM python:3
 # Install QEMU and essential packages.
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-      qemu-kvm virt-manager virt-viewer cifs-utils curl gnupg \
+      qemu qemu-kvm qvirt-manager virt-viewer cifs-utils curl gnupg \
       software-properties-common rsync
 
 # Install Packer and set up HashiCorp repository.
