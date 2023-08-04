@@ -1,11 +1,16 @@
-FROM python:3
+FROM ubuntu:latest
+
 
 # Install QEMU and essential packages.
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends \
-      qemu-kvm virt-manager virt-viewer cifs-utils curl gnupg \
-      libvirt-daemon-system virtinst libvirt-clients bridge-utils \
-      software-properties-common rsync
+  apt -y install qemu-kvm qemu virt-manager virt-viewer cifs-utils \
+    curl gnupg software-properties-common rsync python3-pip
+
+#RUN apt-get update && \ 
+#  apt-get install -y --no-install-recommends \
+#      qemu-kvm qemu virt-manager virt-viewer cifs-utils curl gnupg \
+#      libvirt-daemon-system virtinst libvirt-clients bridge-utils \
+#      software-properties-common rsync
 
 # Install Packer and set up HashiCorp repository.
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
