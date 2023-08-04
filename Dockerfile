@@ -3,7 +3,8 @@ FROM python:3
 # Install QEMU and essential packages.
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-      qemu qemu-kvm qvirt-manager virt-viewer cifs-utils curl gnupg \
+      qemu-kvm virt-manager virt-viewer cifs-utils curl gnupg \
+      libvirt-daemon-system virtinst libvirt-clients bridge-utils \
       software-properties-common rsync
 
 # Install Packer and set up HashiCorp repository.
@@ -16,11 +17,8 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Create dev user
-RUN useradd -ms $(which bash) dev && mkdir -p /work /artifacts && chown -R dev:dev /work 
+RUN useradd -ms $(which bash) dev && mkdir -p /work /artifacts && chown -R dev:dev /work && adduser dev kvm
 ENV PATH="${PATH}:/home/dev/.local/bin"
-
-# Create work directory
-#RUN mkdir -p /work && chown -R dev:dev /work
 
 USER dev
 
