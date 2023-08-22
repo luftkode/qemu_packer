@@ -15,7 +15,10 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Create dev user
-RUN useradd -ms $(which bash) dev && mkdir -p /work /artifacts && chown -R dev:dev /work && adduser dev kvm
+RUN groupadd -g 1024 dev \
+    && useradd -u 1024 -g dev -ms $(which bash) -d /home/dev dev \
+    && mkdir -p /work && chown -R dev:dev /work
+
 ENV PATH="${PATH}:/home/dev/.local/bin"
 
 USER dev
