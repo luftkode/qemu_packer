@@ -18,7 +18,7 @@ docker run -v ${PWD}:/work \
   -e HOST_USER=$USER_ID `# Used to set correct ownership of files in the container` \
   --device=/dev/kvm `# Map Virtulization` \
   $IT \
-  airit/qemu_packer \
+  qemu_packer \
   $ENTRYPOINT
 
   
